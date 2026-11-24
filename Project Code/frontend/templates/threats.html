@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Threats | DeepGuard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #05445E;
+            --secondary-color: #189AB4;
+            --accent-color: #75E6DA;
+            --background-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-color: #D2F1E4;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 5% 20%, rgba(5, 68, 94, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 95% 80%, rgba(24, 154, 180, 0.2) 0%, transparent 25%);
+            z-index: -1;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(117, 230, 218, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 2rem;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+
+        .card h2 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h2 i {
+            font-size: 1.2rem;
+        }
+
+        /* Threat cards */
+        .threat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .threat-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--danger-color);
+            transition: all 0.3s ease;
+        }
+
+        .threat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .threat-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+        }
+
+        .threat-card p {
+            line-height: 1.6;
+        }
+
+        /* Case study styles */
+        .case-study {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .case-study:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .case-study h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .case-study-info {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .case-study-meta {
+            background-color: rgba(5, 68, 94, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .case-study-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .case-study-content p {
+            line-height: 1.6;
+        }
+
+        .impact-list {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .impact-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .impact-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Section styles */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        /* Call to action banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='rgba(255,255,255,0.05)' fill-rule='evenodd'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .cta-banner h2 {
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-banner p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stats section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Cyber grid background */
+        .cyber-grid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: 
+                linear-gradient(rgba(24, 154, 180, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(24, 154, 180, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transform: rotateX(60deg);
+            z-index: -1;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Utility classes */
+        .glowing-text {
+            text-shadow: 0 0 10px rgba(117, 230, 218, 0.5), 0 0 20px rgba(117, 230, 218, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <span>Deep<span class="glowing-text">Guard</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link">About Us</a>
+            <a href="/threats" class="nav-link active">Deepfake Threats</a>
+            <a href="/feedback" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2><i class="fas fa-exclamation-triangle"></i> The Growing Threat of Deepfakes</h2>
+            <p>As deepfake technology becomes increasingly sophisticated and accessible, the potential for misuse poses significant risks to individuals, organizations, and society at large. Understanding these threats is crucial for developing effective detection and prevention strategies.</p>
+
+            <div class="threat-cards">
+                <div class="threat-card">
+                    <h3><i class="fas fa-user-secret"></i> Identity Theft</h3>
+                    <p>Deepfakes enable criminals to impersonate individuals in video calls, voice messages, or photographs, facilitating sophisticated identity theft and fraud schemes.</p>
+                </div>
+
+                <div class="threat-card">
+                    <h3><i class="fas fa-users"></i> Reputation Damage</h3>
+                    <p>Synthetic media can be weaponized to create false narratives about individuals or organizations, causing severe reputation damage that can be difficult to reverse.</p>
+                </div>
+
+                <div class="threat-card">
+                    <h3><i class="fas fa-comments-dollar"></i> Financial Fraud</h3>
+                    <p>Voice cloning and image manipulation enable new forms of social engineering, allowing criminals to bypass traditional security measures and authorize fraudulent transactions.</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="section-header"><i class="fas fa-chart-line"></i> The Alarming Statistics</h3>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value">500%</div>
+                        <div class="stat-label">Increase in deepfake incidents in the last 2 years</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Of people cannot reliably identify sophisticated deepfakes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$5B+</div>
+                        <div class="stat-label">Estimated financial losses due to deepfake fraud in 2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-file-alt"></i> Real-World Case Studies</h2>
+            <p>The following case studies highlight the real-world impact of deepfakes and underscore the critical importance of detection technologies like DeepGuard.</p>
+
+            <!-- Audio Deepfake Case Study -->
+            <div class="case-study">
+                <h3><i class="fas fa-microphone-alt"></i> Audio Deepfake: The $25 Million CEO Voice Scam</h3>
+                
+                <div class="case-study-info">
+                    <div class="case-study-meta">
+                        <i class="fas fa-calendar"></i> 2023
+                    </div>
+                    <div class="case-study-meta">
+                        <i class="fas fa-globe"></i> Multinational Corporation
+                    </div>
+                    <div class="case-study-meta">
+                        <i class="fas fa-tag"></i> Voice Cloning
+                    </div>
+                </div>
+                
+                <div class="case-study-content">
+                    <p>In early 2023, a finance executive at a multinational corporation received what appeared to be an urgent call from the company's CEO. The voice on the phone—indistinguishable from the CEO's actual voice—requested an immediate wire transfer of $25 million for a "confidential acquisition." The scammers had used AI to clone the CEO's voice from public speeches and interviews.</p>
+                    
+                    <p>The finance executive, recognizing the voice and trusting the apparent urgency, authorized the transfer. Only when following up with the CEO directly the next day did the executive discover the fraud. By then, the funds had been routed through multiple accounts and were largely unrecoverable.</p>
+                    
+                    <h4>Impact:</h4>
+                    <ul class="impact-list">
+                        <li>$25 million in direct financial losses</li>
+                        <li>Significant damage to internal trust within the organization</li>
+                        <li>Implementation of costly new verification protocols for all executive communications</li>
+                        <li>Negative impact on stock price when the incident became public</li>
+                    </ul>
+                    
+                    <p>This case demonstrates how convincing audio deepfakes can bypass human verification—even from professionals who regularly interact with the impersonated individual. Had DeepGuard's audio detection technology been implemented, the fraudulent call could have been flagged for additional verification before any transfers were authorized.</p>
+                </div>
+            </div>
+
+            <!-- Image Deepfake Case Study -->
+            <div class="case-study">
+                <h3><i class="fas fa-image"></i> Image Deepfake: The Political Disinformation Campaign</h3>
+                
+                <div class="case-study-info">
+                    <div class="case-study-meta">
+                        <i class="fas fa-calendar"></i> 2024
+                    </div>
+                    <div class="case-study-meta">
+                        <i class="fas fa-globe"></i> National Election
+                    </div>
+                    <div class="case-study-meta">
+                        <i class="fas fa-tag"></i> Image Manipulation
+                    </div>
+                </div>
+                
+                <div class="case-study-content">
+                    <p>During a contentious national election in 2024, a series of highly realistic deepfake images began circulating on social media platforms showing a leading candidate in compromising situations—meeting with sanctioned foreign officials, accepting apparent bribes, and engaging in unethical behavior.</p>
+                    
+                    <p>Though quickly debunked by fact-checkers, the images spread rapidly across social networks and messaging apps. The deepfakes were sophisticated enough that initial media reports covered them as potentially authentic, requiring the campaign to divert significant resources toward damage control rather than policy messaging.</p>
+                    
+                    <h4>Impact:</h4>
+                    <ul class="impact-list">
+                        <li>Measurable impact on public perception, with polls showing a 4-point decline following the image releases</li>
+                        <li>Erosion of public trust in authentic imagery across the political spectrum</li>
+                        <li>Campaign resources diverted to combat disinformation rather than promote policy positions</li>
+                        <li>Lasting damage even after debunking, with 28% of voters still believing the images were authentic</li>
+                    </ul>
+                    
+                    <p>This case illustrates the "liar's dividend," where even after content is proven false, residual doubt remains. DeepGuard's image detection capabilities would enable social media platforms, news organizations, and campaigns to quickly verify suspect content before amplification occurs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-banner">
+            <h2>Protect Your Digital Truth</h2>
+            <p>In an era where seeing and hearing can no longer be believing, DeepGuard provides critical protection against synthetic media threats.</p>
+            <a href="/" class="cta-btn">Try DeepGuard Now</a>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Why Deepfake Detection is Essential</h2>
+            
+            <div class="section">
+                <h3 class="section-header"><i class="fas fa-balance-scale"></i> For Individuals</h3>
+                <p>As deepfake technology becomes more accessible, ordinary individuals face increased risks of impersonation, reputation damage, and fraud. Personal protection through detection tools is becoming as essential as antivirus software was in previous decades.</p>
+                
+                <ul class="impact-list">
+                    <li>Protect personal reputation from synthetic media attacks</li>
+                    <li>Verify the authenticity of sensitive communications</li>
+                    <li>Prevent financial fraud through voice or video impersonation</li>
+                    <li>Maintain trust in personal and professional relationships</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-header"><i class="fas fa-building"></i> For Organizations</h3>
+                <p>Businesses and institutions face unprecedented threats from deepfakes, including brand damage, financial fraud, and erosion of customer trust. Implementing detection capabilities is now a critical component of corporate security infrastructure.</p>
+                
+                <ul class="impact-list">
+                    <li>Secure financial transactions against voice-based fraud</li>
+                    <li>Protect brand integrity from synthetic misrepresentation</li>
+                    <li>Verify the authenticity of executive communications</li>
+                    <li>Maintain stakeholder trust in an era of synthetic media</li>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h3 class="section-header"><i class="fas fa-globe"></i> For Society</h3>
+                <p>The societal implications of widespread deepfake technology extend beyond individual and organizational concerns, threatening to undermine trust in media, institutions, and ultimately, democratic processes.</p>
+                
+                <ul class="impact-list">
+                    <li>Preserve trust in media and public discourse</li>
+                    <li>Protect electoral processes from synthetic interference</li>
+                    <li>Maintain the factual basis of historical record</li>
+                    <li>Support the continued functioning of evidence-based systems like courts</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="cyber-grid"></div>
+
+    <footer>
+        <p>DeepGuard Advanced Deepfake Detection System - Final Year Project</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize navigation
+            initNavigation('/threats');
+        });
+
+        function initNavigation(activePath) {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === activePath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

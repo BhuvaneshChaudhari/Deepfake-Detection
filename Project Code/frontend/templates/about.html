@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | DeepGuard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #05445E;
+            --secondary-color: #189AB4;
+            --accent-color: #75E6DA;
+            --background-color: #121212;
+            --card-bg: #1E1E1E;
+            --text-color: #D2F1E4;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 5% 20%, rgba(5, 68, 94, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 95% 80%, rgba(24, 154, 180, 0.2) 0%, transparent 25%);
+            z-index: -1;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(30, 30, 30, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(117, 230, 218, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 2rem;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Cyber grid background */
+        .cyber-grid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: 
+                linear-gradient(rgba(24, 154, 180, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(24, 154, 180, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transform: rotateX(60deg);
+            z-index: -1;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Utility classes */
+        .glowing-text {
+            text-shadow: 0 0 10px rgba(117, 230, 218, 0.5), 0 0 20px rgba(117, 230, 218, 0.3);
+        }
+
+        ul {
+            margin-left: 2rem;
+            line-height: 1.6;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <span>Deep<span class="glowing-text">Guard</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link active">Home</a>
+            <a href="/about" class="nav-link">About Us</a>
+            <a href="/threats" class="nav-link">Deepfake Threats</a>
+            <a href="/feedback" class="nav-link">Feedback</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2><i class="fas fa-info-circle"></i> About DeepGuard</h2>
+            <p>DeepGuard is an advanced deepfake detection system developed as a final year project by a team of computer science students. Our mission is to combat the growing threat of synthetic media by providing accessible and reliable detection tools.</p>
+            <p>With the rapid advancement of AI-generated content, distinguishing between real and fake media has become increasingly challenging. DeepGuard leverages state-of-the-art machine learning models to analyze both images and audio for signs of manipulation.</p>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+            <p>We aim to:</p>
+            <ul>
+                <li>Provide accurate and reliable deepfake detection</li>
+                <li>Educate the public about the dangers of synthetic media</li>
+                <li>Develop tools that are accessible to everyone</li>
+                <li>Stay ahead of evolving deepfake technologies</li>
+                <li>Promote digital literacy and media authenticity</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-users"></i> Our Team</h2>
+            <p>DeepGuard is developed by a dedicated team of computer science students passionate about cybersecurity and AI ethics.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" alt="Team Member">
+                    <h3>Sharv Sankpal</h3>
+                    <p>Lead Developer</p>
+                    <p>Machine Learning Specialist</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" alt="Team Member">
+                    <h3>Avadhoot Jogade</h3>
+                    <p>Frontend Developer</p>
+                    <p>UI/UX Designer</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" alt="Team Member">
+                    <h3>Man Kadu</h3>
+                    <p>Backend Developer</p>
+                    <p>API Specialist</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://via.placeholder.com/150" alt="Team Member">
+                    <h3>Junaid Kazi</h3>
+                    <p>Data Scientist</p>
+                    <p>Model Training</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> Technology Stack</h2>
+            <p>DeepGuard is built using cutting-edge technologies:</p>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>TensorFlow</h3>
+                    <p>Deep learning framework</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Flask</h3>
+                    <p>Backend server</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Librosa</h3>
+                    <p>Audio processing</p>
+                </div>
+                <div class="tech-item">
+                    <h3>HTML/CSS/JS</h3>
+                    <p>Frontend interface</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cyber-grid"></div>
+
+    <footer>
+        <p>DeepGuard Advanced Deepfake Detection System - Final Year Project</p>
+    </footer>
+
+    <script>
+       // Main script for about.html - DeepGuard About Page
+document.addEventListener('DOMContentLoaded', function() {
+    // Mark about link as active
+    initNavigation('/about');
+    
+    // Initialize particles.js background
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 900 } },
+                color: { value: "#75E6DA" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4, random: true, anim: { enable: true, speed: 0.8 } },
+                size: { value: 2.5, random: true, anim: { enable: true, speed: 1.5 } },
+                line_linked: { enable: true, distance: 150, color: "#189AB4", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 0.8, direction: "none", random: true }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+    }
+    
+    // Initialize UI elements specific to about page
+    initCustomCursor();
+    initTeamMemberAnimations();
+    initTechnologyCards();
+});
+
+// Initialize navigation
+function initNavigation(activePath) {
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === activePath) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+// Initialize custom cursor
+function initCustomCursor() {
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+    
+    const follower = document.createElement('div');
+    follower.className = 'cursor-follower';
+    document.body.appendChild(follower);
+    
+    document.addEventListener('mousemove', function(e) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        
+        setTimeout(() => {
+            follower.style.left = e.clientX + 'px';
+            follower.style.top = e.clientY + 'px';
+        }, 100);
+    });
+    
+    // Cursor hover effects
+    const hoverElements = document.querySelectorAll('button, a, .team-member, .tech-card');
+    hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            follower.style.width = '30px';
+            follower.style.height = '30px';
+            follower.style.borderColor = 'var(--accent-color)';
+        });
+        el.addEventListener('mouseleave', () => {
+            follower.style.width = '40px';
+            follower.style.height = '40px';
+            follower.style.borderColor = 'rgba(117, 230, 218, 0.5)';
+        });
+    });
+}
+
+// Initialize team member animations
+function initTeamMemberAnimations() {
+    const teamMembers = document.querySelectorAll('.team-member');
+    if (!teamMembers.length) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transitionDelay = `${index * 0.1}s`;
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    teamMembers.forEach(member => {
+        member.style.opacity = '0';
+        member.style.transform = 'translateY(30px)';
+        member.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(member);
+    });
+}
+
+// Initialize technology cards
+function initTechnologyCards() {
+    const techCards = document.querySelectorAll('.tech-card');
+    if (!techCards.length) return;
+    
+    techCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            const icon = card.querySelector('.tech-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            }
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            const icon = card.querySelector('.tech-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0)';
+            }
+        });
+    });
+    
+    // Animate cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.transitionDelay = `${index * 0.1}s`;
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    techCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+}
+    </script>
+</body>
+</html>
